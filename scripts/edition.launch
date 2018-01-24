@@ -1,0 +1,4 @@
+#!/bin/bash
+kile &
+sh -c 'okular ./build/frontiers-benchmark.pdf & ./make_launcher.sh & wait'
+./killall_launcher
