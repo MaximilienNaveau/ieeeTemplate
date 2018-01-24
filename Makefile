@@ -26,8 +26,6 @@ define prepare_build
 endef
 
 define end_build
-# 	create a link to the log file for texmaker
-	ln -sf $(ROOT)/$(BUILDDIR)/$(FILENAME).log $(ROOT)/$(SRCDIR)/
 	cp $(ROOT)/$(BUILDDIR)/$(FILENAME).pdf $(ROOT)/$(BINDIR)/
 endef
 
