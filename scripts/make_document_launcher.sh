@@ -9,6 +9,7 @@ function ctrl_c() {
 
 while true ;
 do
-    inotifywait -e modify -r ./src/*.tex ./figures/*.pdf ./src/*.bib
+    #inotifywait -e modify -r ./src/*.tex ./figures/*.pdf ./src/*.bib
+    inotifywait -e modify -r ./src ./figures --exclude ./figures/tikz
     make fast
 done

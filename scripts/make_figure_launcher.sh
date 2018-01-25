@@ -3,7 +3,7 @@
 # trap ctrl-c and call ctrl_c()
 trap ctrl_c INT
 function ctrl_c() {
-    ./killall_launcher.sh
+    ./scripts/killall_launcher.sh
     exit 1
 }
 
