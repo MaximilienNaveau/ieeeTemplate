@@ -9,6 +9,6 @@ function ctrl_c() {
 
 while true ;
 do
-    inotifywait -e modify -r ./figures/tikz/*.tex
+    inotifywait -e modify -r ./figures/tikz
     make figures
 done
