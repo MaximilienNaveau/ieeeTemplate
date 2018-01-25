@@ -9,7 +9,7 @@ BUILDDIR:=build
 # assumes there is a tikz folder in figures to compile them
 TKIZDIR:=$(ROOT)/$(FIGDIR)/tikz
 # get the main tex and seve the name wihtout extension in FILENAME
-FILENAME:=$(shell grep -Elr 'documentclass' src/* | cut -d':' -f1)
+FILENAME:=$(shell grep -Elr 'documentclass' $(SRCDIR)/* | cut -d':' -f1)
 FILENAME:=$(notdir $(FILENAME))
 FILENAME:=$(basename $(FILENAME))
 $(info The main tex is $(FILENAME).tex)

@@ -3,13 +3,12 @@
 # trap ctrl-c and call ctrl_c()
 trap ctrl_c INT
 function ctrl_c() {
-    ./killall_launcher.sh
+    ./scripts/killall_launcher.sh
     exit 1
 }
 
-
-./make_document_launcher.sh &
-./make_figure_launcher.sh &
+./script/make_document_launcher.sh &
+./script/make_figure_launcher.sh &
 
 while true ;
 do
