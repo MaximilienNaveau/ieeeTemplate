@@ -7,13 +7,5 @@ function ctrl_c() {
     exit 1
 }
 
-./script/make_document_launcher.sh &
-./script/make_figure_launcher.sh &
-
-while true ;
-do
-    read -n1 -r -p "Press ctrl-c key to end the program..." -t 1.0 key
-    sleep 300
-done
-
-./killall_launcher.sh
+./scripts/make_document_launcher.sh &
+./scripts/make_figure_launcher.sh &

@@ -11,8 +11,6 @@ function ctrl_c() {
 kile &
 f=$(grep -Elr 'documentclass' src/* | cut -d':' -f1)
 f=${f##*/}
-echo $f
+echo 'building '$f
 f=${f%.*}
-echo $f
-echo 'okular ./build/'$f'.pdf & ./script/make_launcher.sh & wait'
-sh -c 'okular ./build/'$f'.pdf & ./script/make_launcher.sh & wait'
+sh -c 'okular ./build/'$f'.pdf & ./scripts/make_launcher.sh & wait'
