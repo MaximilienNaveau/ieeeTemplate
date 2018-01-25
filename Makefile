@@ -3,6 +3,7 @@ ROOT:=$(PWD)
 SRCDIR:=src
 BINDIR:=bin
 FIGDIR:=figures
+VIDEODIR:=video
 BUILDDIR:=build
 
 # usefull parameter from above 
@@ -20,6 +21,7 @@ DEPEND_SRCS_FIG:= $(shell find $(TKIZDIR) -name '*.tex')
 define prepare_build
 	if [ ! -d "$(BUILDDIR)" ]; then mkdir $(BUILDDIR); fi
 	if [ ! -d "$(BINDIR)" ]; then mkdir $(BINDIR); fi
+	ln -sf $(ROOT)/$(VIDEODIR) $(ROOT)/$(BUILDDIR)/
 	ln -sf $(ROOT)/$(SRCDIR)/*.bib $(ROOT)/$(BUILDDIR)/
 	ln -sf $(ROOT)/$(SRCDIR)/*.bst $(ROOT)/$(BUILDDIR)/
 	ln -sf $(ROOT)/$(SRCDIR)/*.sty $(ROOT)/$(BUILDDIR)/
