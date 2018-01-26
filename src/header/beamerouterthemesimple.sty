@@ -19,6 +19,16 @@
 \ExecuteOptionsBeamer{subsection=true}
 \ProcessOptionsBeamer
 
+% motion group
+%\definecolor{groupColor}{RGB}{75,168,79}
+\definecolor{groupColor}{RGB}{37,174,50}
+% amd department
+\definecolor{amdColor}{RGB}{112,121,206}
+
+\colorlet{titleColor}{groupColor}
+\colorlet{frameTitleColor}{groupColor}
+
+
 \definecolor{bgcolor1}{rgb}{0.9,0.,0.}
 \definecolor{bgcolor2}{rgb}{0.9,0.,0.}
 
@@ -26,9 +36,7 @@
 \definecolor{txtcolor2}{RGB}{231 ,  62 , 1}% orange 
 \definecolor{txtcolor3}{RGB}{237 , 127 ,16}%
 \definecolor{txtcolor4}{rgb}{0.9,0.,0.}
-
 \definecolor{txtcolor5}{RGB}{102, 0, 153}%
-
 \definecolor{corail}{RGB}{231 ,  62 , 1}
 
 \setbeamercolor{background canvas}{bg=}
@@ -38,8 +46,8 @@
 \setbeamercolor{block title}{bg=}
 \setbeamercolor{block title example}{bg=}
 \setbeamercolor{fine separation line}{bg=}
-\setbeamercolor{frametitle}{fg=txtcolor1,bg=,rounded}
-\setbeamercolor{border}{fg=,bg=txtcolor1,rounded}
+\setbeamercolor{frametitle}{fg=frameTitleColor,bg=,rounded}
+\setbeamercolor{border}{fg=,bg=frameTitleColor,rounded}
 \setbeamercolor{inside}{fg=txtcolor1,bg=white,rounded}
 \setbeamercolor{item projected}{bg=}
 \setbeamercolor{normal text}{bg=}
@@ -55,7 +63,7 @@
 \setbeamercolor{structure}{bg=}
 \setbeamercolor{subsection in sidebar}{bg=}
 \setbeamercolor{subsection in sidebar shaded}{bg=}
-\setbeamercolor{title}{fg=white,bg=txtcolor1}
+\setbeamercolor{title}{fg=white,bg=titleColor}
 \setbeamercolor{titlelike}{bg=}
 \setbeamercolor{framesubtitle}{bg=}
 \setbeamercolor{subsection in head/foot}{bg=}
@@ -124,12 +132,12 @@
 \defbeamertemplate*{headline}{mysmoothbars theme}
 {%\insertsectionnavigationhorizontal{\linewidth}
 
-  \begin{beamercolorbox}[ht=4ex,dp=1ex]{mysection in head/foot}
-     %\insertnavigation{\paperwidth}  
-   {\textbf{\insertnavigation{\linewidth}{}{}}\hfill
-    %\insertframenumber/\inserttotalframenumber
-    \hfill  }
-  \end{beamercolorbox}
+%   \begin{beamercolorbox}[ht=4ex,dp=1ex]{mysection in head/foot}
+%      %\insertnavigation{\paperwidth}  
+%    {\textbf{\insertnavigation{\linewidth}{}{}}\hfill
+%     %\insertframenumber/\inserttotalframenumber
+%     \hfill  }
+%   \end{beamercolorbox}
 %  %
 %  \ifbeamer@sb@subsection%
 %    \begin{beamercolorbox}[ht=2ex,dp=1.125ex,%
