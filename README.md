@@ -1,5 +1,6 @@
-# beamer_template
-A beamer template with a mechanism to autobuild using "inotifywait" and "make"
+# ieeeTemplate
+latex template for the ieee conference using an auto build system.
+It uses "inotifywait" and "make"
 
 to use the automatic build :
 
