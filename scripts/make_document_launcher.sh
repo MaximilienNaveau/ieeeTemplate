@@ -10,6 +10,6 @@ function ctrl_c() {
 while true ;
 do
     #inotifywait -e modify -r ./src/*.tex ./figures/*.pdf ./src/*.bib
-    inotifywait -e modify -r ./src ./figures --exclude ./figures/tikz
+    inotifywait -e modify ./src/*.tex ./src/header/*.tex
     make fast
 done
