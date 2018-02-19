@@ -6,7 +6,7 @@ FIGDIR:=figures
 VIDEODIR:=video
 BUILDDIR:=build
 
-# usefull parameter from above 
+# useful parameter from above 
 # assumes there is a tikz folder in figures to compile them
 TKIZDIR:=$(ROOT)/$(FIGDIR)/tikz
 # get the main tex and seve the name wihtout extension in FILENAME
@@ -17,6 +17,8 @@ $(info The main tex is $(FILENAME).tex)
 TEXFILENAME:=$(FILENAME).tex
 DEPEND_SRCS:= $(shell find $(SRCDIR) -name '*.tex')
 DEPEND_SRCS_FIG:= $(shell find $(TKIZDIR) -name '*.tex')
+# export this variable to access the .cls in the header folder
+export TEXINPUTS=.:./header/:
 
 define prepare_build
 	if [ ! -d "$(BUILDDIR)" ]; then mkdir $(BUILDDIR); fi
