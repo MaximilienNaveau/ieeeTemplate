@@ -9,6 +9,10 @@ function ctrl_c() {
 
 while true ;
 do
-    inotifywait -e modify -r ./figures/tikz
+    list_files=$(find figures -name '*.tex')
+    if [ $list_files  ]
+    echo "the files to watch are "$list_files
+    inotifywait -e modify $list_files
     make figures
+    sleep 0.1
 done

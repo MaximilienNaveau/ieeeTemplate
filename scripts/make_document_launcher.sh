@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # trap ctrl-c and call ctrl_c()
 trap ctrl_c INT
@@ -7,9 +7,13 @@ function ctrl_c() {
     exit 1
 }
 
+
 while true ;
 do
-    #inotifywait -e modify -r ./src/*.tex ./figures/*.pdf ./src/*.bib
-    inotifywait -e modify ./src/*.tex ./src/header/*.tex
+    list_files=$(find src/ -name '*.tex')
+    list_files+=" $(find src/ -name '*.bib')"
+    echo "the files to watch are "$list_files
+    inotifywait -e modify $list_files
     make fast
+    sleep 0.1
 done
