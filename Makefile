@@ -1,6 +1,8 @@
 # default parameters
 ROOT:=$(PWD)
 SRCDIR:=src
+HEADERDIR:=src/header
+BIBDIR:=src/bib
 BINDIR:=bin
 FIGDIR:=figures
 VIDEODIR:=video
@@ -20,50 +22,77 @@ DEPEND_SRCS_FIG:= $(shell find $(TKIZDIR) -name '*.tex')
 # export this variable to access the .cls in the header folder
 export TEXINPUTS=.:./header/:
 
+define link_bst_bib_sty
+	for f in $(shell find $(SRCDIR) -name '*.sty') \
+		$(shell find $(SRCDIR) -name '*.bib') \
+		$(shell find $(SRCDIR) -name '*.bst') \
+		$(shell find $(SRCDIR) -name '*.cls') ; do \
+		echo $$f ; \
+		ln -sf $(ROOT)/$$f $(ROOT)/$(BUILDDIR)/ ;\
+	done
+endef
+
 define prepare_build
 	if [ ! -d "$(BUILDDIR)" ]; then mkdir $(BUILDDIR); fi
 	if [ ! -d "$(BINDIR)" ]; then mkdir $(BINDIR); fi
-	ln -sf $(ROOT)/$(VIDEODIR) $(ROOT)/$(BUILDDIR)/
-	ln -sf $(ROOT)/$(SRCDIR)/*.bib $(ROOT)/$(BUILDDIR)/
-	ln -sf $(ROOT)/$(SRCDIR)/*.bst $(ROOT)/$(BUILDDIR)/
-	ln -sf $(ROOT)/$(SRCDIR)/*.sty $(ROOT)/$(BUILDDIR)/
+	$(call link_bst_bib_sty)
 endef
 
 define end_build
-	cp $(ROOT)/$(BUILDDIR)/$(FILENAME).pdf $(ROOT)/$(BINDIR)/
+	echo "copy of \"" $(1) "\" in the build folder"
+	for pdffile in $(1) ; do \
+		cp $(ROOT)/$(BUILDDIR)/$$pdffile.pdf $(ROOT)/$(BINDIR)/ ;\
+	done
 endef
 
 define pdf_latex
-	cd $(1) ; pdflatex --output-directory=$(ROOT)/$(BUILDDIR) $(2).tex ; cd $(ROOT) ; pwd
+	echo "pdf_latex arguments are :" $(1) $(2)
+	for texfiles in $(2) ; do \
+		echo "Compiling :" $$texfiles.tex ;\
+		cd $(1) ; pdflatex -interaction=nonstopmode --output-directory=$(ROOT)/$(BUILDDIR) $$texfiles.tex ; cd $(ROOT) ; pwd ;\
+	done
+endef
+
+define bibtex
+	cd $(ROOT)/$(BUILDDIR) ; bibtex $(1).aux ; cd $(ROOT)/
 endef
 
 define build
-	$(call pdf_latex,$(1),$(2))
-	cd $(ROOT)/$(BUILDDIR) ; bibtex $(2).aux ; cd $(ROOT)/
-	$(call pdf_latex,$(1),$(2))
-	$(call pdf_latex,$(1),$(2))
+	$(call pdf_latex, $(1), $(2))
+	$(call bibtex, $(2))
+	$(call pdf_latex, $(1), $(2))
+	$(call pdf_latex, $(1), $(2))
 endef
 
 define build_fast
-	$(call pdf_latex,$(1),$(2))
+	$(call pdf_latex, $(1), $(2))
 endef
 
 all: $(DEPEND_SRCS)
 	$(call prepare_build)
-	$(call build,$(ROOT)/$(SRCDIR),$(FILENAME))
-	$(call end_build)
+	$(call build, $(ROOT)/$(SRCDIR), $(FILENAME))
+	$(call end_build, $(FILENAME))
+
+$(FILENAME): $(DEPEND_SRCS)
+	$(call prepare_build)
+	$(call build_fast, $(ROOT)/$(SRCDIR), $@)
+	$(call end_build, $@)
 
 figures: $(DEPEND_SRCS_FIG)
 	$(call prepare_build)
-	$(foreach source, $(DEPEND_SRCS_FIG), $(call build,$(TIKZDIR),$(basename $(source))) ; cp $(ROOT)/$(BUILDDIR)/$(basename $(source))).pdf $(ROOT)/$(FIGDIR))
+	$(foreach source, $(DEPEND_SRCS_FIG), $(call build, $(TIKZDIR), $(basename $(source))) ; cp $(ROOT)/$(BUILDDIR)/$(basename $(source))).pdf $(ROOT)/$(FIGDIR))
 
 fast: $(DEPEND_SRCS)
 	$(call prepare_build)
-	$(call build_fast,$(ROOT)/$(SRCDIR),$(FILENAME))
+	$(call build_fast, $(ROOT)/$(SRCDIR), $(FILENAME))
 	$(call end_build)
 
 count: $(DEPEND_SRCS)
 	wc -w $(DEPEND_SRCS)
+
+bib : $(DEPEND_SRCS)
+	$(call prepare_build)
+	$(call bibtex,$(FILENAME))	
 
 clean:
 	rm -f ./build/*
