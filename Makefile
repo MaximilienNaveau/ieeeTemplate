@@ -41,7 +41,7 @@ endef
 define end_build
 	echo "copy of \"" $(1) "\" in the build folder"
 	for pdffile in $(1) ; do \
-		cp $(ROOT)/$(BUILDDIR)/$$pdffile.pdf $(ROOT)/$(BINDIR)/ ;\
+		cp $(ROOT)/$(BUILDDIR)/$$pdffile.pdf $(ROOT)/$(BINDIR)/ ; \
 	done
 endef
 
@@ -54,7 +54,10 @@ define pdf_latex
 endef
 
 define bibtex
-	cd $(ROOT)/$(BUILDDIR) ; bibtex $(1).aux ; cd $(ROOT)/
+	for bibfiles in $(1) ; do \
+		echo "Bibtex on :" $$bibfiles.aux ;\
+		cd $(ROOT)/$(BUILDDIR) ; bibtex $$bibfiles.aux ; cd $(ROOT)/ ; \
+	done
 endef
 
 define build
@@ -66,6 +69,7 @@ endef
 
 define build_fast
 	$(call pdf_latex, $(1), $(2))
+	$(call bibtex, $(2))
 endef
 
 all: $(DEPEND_SRCS)
