@@ -53,6 +53,14 @@ define pdf_latex
 	done
 endef
 
+define pdf_latex_debug
+	echo "pdf_latex arguments are :" $(1) $(2)
+	for texfiles in $(2) ; do \
+		echo "Compiling :" $$texfiles.tex ;\
+		cd $(1) ; pdflatex --output-directory=$(ROOT)/$(BUILDDIR) $$texfiles.tex ; cd $(ROOT) ; pwd ;\
+	done
+endef
+
 define bibtex
 	for bibfiles in $(1) ; do \
 		echo "Bibtex on :" $$bibfiles.aux ;\
@@ -69,6 +77,11 @@ endef
 
 define build_fast
 	$(call pdf_latex, $(1), $(2))
+	$(call bibtex, $(2))
+endef
+
+define build_debug
+	$(call pdf_latex_debug, $(1), $(2))
 	$(call bibtex, $(2))
 endef
 
@@ -97,6 +110,11 @@ count: $(DEPEND_SRCS)
 bib : $(DEPEND_SRCS)
 	$(call prepare_build)
 	$(call bibtex,$(FILENAME))	
+
+debug: $(DEPEND_SRCS)
+	$(call prepare_build)
+	$(call build_debug, $(ROOT)/$(SRCDIR), $(FILENAME))
+	$(call end_build, $(FILENAME))
 
 clean:
 	rm -f ./build/*
