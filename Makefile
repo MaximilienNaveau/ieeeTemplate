@@ -89,7 +89,7 @@ figures: $(DEPEND_SRCS_FIG)
 fast: $(DEPEND_SRCS)
 	$(call prepare_build)
 	$(call build_fast, $(ROOT)/$(SRCDIR), $(FILENAME))
-	$(call end_build)
+	$(call end_build, $(FILENAME))
 
 count: $(DEPEND_SRCS)
 	wc -w $(DEPEND_SRCS)
